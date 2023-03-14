@@ -1,0 +1,233 @@
+<HTML>
+ <HEAD>
+  <TITLE>아산_마더스팜_220115_1day_</TITLE>
+ </HEAD>
+ <BODY onLoad="Load()">
+ <FONT FACE=VERDANA SIZE=2><B>아산_마더스팜_220115_1day_</B><BR>
+	<IMG BORDER=1 STYLE="border-color:black" ID="animated_image"><BR>
+<FONT FACE=COURIER SIZE=2>
+<SPAN ID="frame_title" STYLE="position:relative;left:0;top:-15;color:black;background-color:white;padding:1px;border-width:1px;border-style:solid;border-color:black;display:inline;"></SPAN>
+&nbsp;</FONT><BR>
+  <BUTTON ID="btnToggle" onClick="start_stop()" onDblClick="start_stop()">중지</BUTTON>&nbsp;
+<BUTTON ID="btnFirst" onClick="firstFrame()" onDblClick="firstFrame()" STYLE="width:35">&lt;&lt;</BUTTON>&nbsp;
+  <BUTTON ID="btnPrev" onClick="prevFrame()" onDblClick="prevFrame()" STYLE="width:35">&lt;</BUTTON>&nbsp;
+  <BUTTON ID="btnNext" onClick="nextFrame()" onDblClick="nextFrame()" STYLE="width:35">&gt;</BUTTON>&nbsp;
+  <BUTTON ID="btnLast" onClick="lastFrame()" onDblClick="lastFrame()" STYLE="width:35">&gt;&gt;</BUTTON>
+  <FONT SIZE=1>
+  <BR><BR>&nbsp;&nbsp;&nbsp;<INPUT ID="checkLoop"" TYPE="checkbox" style="width:13;height:13;">계속 반복
+  <BR>&nbsp;&nbsp;&nbsp;<INPUT ID="checkCounter" TYPE="checkbox" CHECKED onClick="showCounter(this.checked)" style="width:13;height:13;">프레임 카운터 표시
+  </FONT>
+  <P>
+  <FONT COLOR=888888 SIZE=1>애니메이션이 만들어진 장소 <A TARGET=_blank HREF="http://www.rhino3d.com"><FONT COLOR=7777ff SIZE=1>Rhino</FONT></A>.</FONT>
+ </BODY>
+</HTML>
+
+<STYLE>
+  button {width:75;height:25;font-family:mssansserif;font-size:8pt}
+</STYLE>
+<SCRIPT LANGUAGE="JavaScript">
+  var FRAME_DELAY = 75;
+  var timeoutID;
+  var ImageCount = 41;
+  var Images = new Array();
+  for( i=0; i < ImageCount; i++ )
+  	Images[i] = new Image();
+
+  var currentImageIndex = 0;
+  var bDisplayDate = 1;
+  var Dates = new Array(41);
+Images[0].src = "아산_마더스팜_220115_1day__00000.jpg"
+Images[1].src = "아산_마더스팜_220115_1day__00001.jpg"
+Images[2].src = "아산_마더스팜_220115_1day__00002.jpg"
+Images[3].src = "아산_마더스팜_220115_1day__00003.jpg"
+Images[4].src = "아산_마더스팜_220115_1day__00004.jpg"
+Images[5].src = "아산_마더스팜_220115_1day__00005.jpg"
+Images[6].src = "아산_마더스팜_220115_1day__00006.jpg"
+Images[7].src = "아산_마더스팜_220115_1day__00007.jpg"
+Images[8].src = "아산_마더스팜_220115_1day__00008.jpg"
+Images[9].src = "아산_마더스팜_220115_1day__00009.jpg"
+Images[10].src = "아산_마더스팜_220115_1day__00010.jpg"
+Images[11].src = "아산_마더스팜_220115_1day__00011.jpg"
+Images[12].src = "아산_마더스팜_220115_1day__00012.jpg"
+Images[13].src = "아산_마더스팜_220115_1day__00013.jpg"
+Images[14].src = "아산_마더스팜_220115_1day__00014.jpg"
+Images[15].src = "아산_마더스팜_220115_1day__00015.jpg"
+Images[16].src = "아산_마더스팜_220115_1day__00016.jpg"
+Images[17].src = "아산_마더스팜_220115_1day__00017.jpg"
+Images[18].src = "아산_마더스팜_220115_1day__00018.jpg"
+Images[19].src = "아산_마더스팜_220115_1day__00019.jpg"
+Images[20].src = "아산_마더스팜_220115_1day__00020.jpg"
+Images[21].src = "아산_마더스팜_220115_1day__00021.jpg"
+Images[22].src = "아산_마더스팜_220115_1day__00022.jpg"
+Images[23].src = "아산_마더스팜_220115_1day__00023.jpg"
+Images[24].src = "아산_마더스팜_220115_1day__00024.jpg"
+Images[25].src = "아산_마더스팜_220115_1day__00025.jpg"
+Images[26].src = "아산_마더스팜_220115_1day__00026.jpg"
+Images[27].src = "아산_마더스팜_220115_1day__00027.jpg"
+Images[28].src = "아산_마더스팜_220115_1day__00028.jpg"
+Images[29].src = "아산_마더스팜_220115_1day__00029.jpg"
+Images[30].src = "아산_마더스팜_220115_1day__00030.jpg"
+Images[31].src = "아산_마더스팜_220115_1day__00031.jpg"
+Images[32].src = "아산_마더스팜_220115_1day__00032.jpg"
+Images[33].src = "아산_마더스팜_220115_1day__00033.jpg"
+Images[34].src = "아산_마더스팜_220115_1day__00034.jpg"
+Images[35].src = "아산_마더스팜_220115_1day__00035.jpg"
+Images[36].src = "아산_마더스팜_220115_1day__00036.jpg"
+Images[37].src = "아산_마더스팜_220115_1day__00037.jpg"
+Images[38].src = "아산_마더스팜_220115_1day__00038.jpg"
+Images[39].src = "아산_마더스팜_220115_1day__00039.jpg"
+Images[40].src = "아산_마더스팜_220115_1day__00040.jpg"
+
+Dates[0] = "2022-01-15 오전 8:00:00"
+Dates[1] = "2022-01-15 오전 8:15:00"
+Dates[2] = "2022-01-15 오전 8:30:00"
+Dates[3] = "2022-01-15 오전 8:45:00"
+Dates[4] = "2022-01-15 오전 9:00:00"
+Dates[5] = "2022-01-15 오전 9:15:00"
+Dates[6] = "2022-01-15 오전 9:30:00"
+Dates[7] = "2022-01-15 오전 9:45:00"
+Dates[8] = "2022-01-15 오전 10:00:00"
+Dates[9] = "2022-01-15 오전 10:15:00"
+Dates[10] = "2022-01-15 오전 10:30:00"
+Dates[11] = "2022-01-15 오전 10:45:00"
+Dates[12] = "2022-01-15 오전 11:00:00"
+Dates[13] = "2022-01-15 오전 11:15:00"
+Dates[14] = "2022-01-15 오전 11:30:00"
+Dates[15] = "2022-01-15 오전 11:45:00"
+Dates[16] = "2022-01-15 오후 12:00:00"
+Dates[17] = "2022-01-15 오후 12:15:00"
+Dates[18] = "2022-01-15 오후 12:30:00"
+Dates[19] = "2022-01-15 오후 12:45:00"
+Dates[20] = "2022-01-15 오후 1:00:00"
+Dates[21] = "2022-01-15 오후 1:15:00"
+Dates[22] = "2022-01-15 오후 1:30:00"
+Dates[23] = "2022-01-15 오후 1:45:00"
+Dates[24] = "2022-01-15 오후 2:00:00"
+Dates[25] = "2022-01-15 오후 2:15:00"
+Dates[26] = "2022-01-15 오후 2:30:00"
+Dates[27] = "2022-01-15 오후 2:45:00"
+Dates[28] = "2022-01-15 오후 3:00:00"
+Dates[29] = "2022-01-15 오후 3:15:00"
+Dates[30] = "2022-01-15 오후 3:30:00"
+Dates[31] = "2022-01-15 오후 3:45:00"
+Dates[32] = "2022-01-15 오후 4:00:00"
+Dates[33] = "2022-01-15 오후 4:15:00"
+Dates[34] = "2022-01-15 오후 4:30:00"
+Dates[35] = "2022-01-15 오후 4:45:00"
+Dates[36] = "2022-01-15 오후 5:00:00"
+Dates[37] = "2022-01-15 오후 5:15:00"
+Dates[38] = "2022-01-15 오후 5:30:00"
+Dates[39] = "2022-01-15 오후 5:45:00"
+Dates[40] = "2022-01-15 오후 6:00:00"
+
+
+  function Load() {
+    begin_animation();
+  }
+
+  function begin_animation() {
+    stop_animation();
+  	EnableCtrls("stop");
+  	run();
+        bRunning = true;
+  }
+
+  function stop_animation() {
+  	EnableCtrls("start");
+  	clearTimeout( timeoutID );
+        bRunning = false;
+  }
+
+  function start_stop() {
+    if (bRunning) {
+      stop_animation();
+    }
+    else {
+      begin_animation();
+    }
+  }
+
+  function run() {
+  	if (nextFrame())
+    	timeoutID = setTimeout( "run()", FRAME_DELAY );
+  }
+
+  function firstFrame() {
+	currentImageIndex = 0;
+  	document.all.animated_image.src = Images[currentImageIndex].src;
+  	DisplayCaption(currentImageIndex)
+  }
+
+  function prevFrame() {
+  	currentImageIndex--;
+  	if( currentImageIndex < 0 )
+  		currentImageIndex= Images.length - 1;
+  	document.all.animated_image.src = Images[currentImageIndex].src;
+  	DisplayCaption(currentImageIndex)
+  }
+
+  function nextFrame() {
+  	currentImageIndex++;
+  	bRetVal = true;
+  	if( currentImageIndex >= Images.length ) {
+  	  if (document.all('checkLoop').checked) {
+    		currentImageIndex = 0;
+  	  }
+  	  else {
+  	    stop_animation();
+  	    currentImageIndex = 0;
+  	    bRetVal = false;
+        return bRetVal;
+  	  }
+  	}
+  	document.all.animated_image.src = Images[currentImageIndex].src;
+  	DisplayCaption(currentImageIndex)
+  	return bRetVal;
+  }
+
+  function lastFrame() {
+	currentImageIndex = Images.length - 1;
+  	document.all.animated_image.src = Images[currentImageIndex].src;
+  	DisplayCaption(currentImageIndex)
+  }
+
+ function DisplayCaption(nFrameNumber) {
+	  document.all.frame_title.innerHTML =  (nFrameNumber + 1)
+ if (bDisplayDate) {
+    	document.all.frame_title.innerHTML = Dates[nFrameNumber];
+ }
+  }
+
+
+  function EnableCtrls(sCtl) {
+	if (sCtl == "stop") {
+		//document.all("btnStop").disabled = false;
+		//document.all("btnStart").disabled = true;
+
+		document.all("btnFirst").disabled = true; 
+		document.all("btnPrev").disabled = true; 
+		document.all("btnNext").disabled = true; 
+		document.all("btnLast").disabled = true; 
+                document.all("btnToggle").innerText = "중지";
+	}
+	if (sCtl == "start") {
+		//document.all("btnStop").disabled = true; 
+		//document.all("btnStart").disabled = false;
+
+		document.all("btnFirst").disabled = false;
+		document.all("btnPrev").disabled = false;
+		document.all("btnNext").disabled = false;
+		document.all("btnLast").disabled = false;
+                document.all("btnToggle").innerText = "시작";
+	}
+  }
+
+  function showCounter(bShow) {
+    if (bShow) {
+      document.all('frame_title').style.display = "inline";
+    }
+    else {
+      document.all('frame_title').style.display = "none";
+    }
+  }
+</SCRIPT>
